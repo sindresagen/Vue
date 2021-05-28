@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <ol>
+            <todo-item
+            v-for="item in groceryList"
+            v-bind:todo="item"
+            v-bind:key="item.id">
+            </todo-item>
+        </ol>
+    </div>
+    <div id="components-demo">
+        <button-counter></button-counter>
+        <button-counter></button-counter>
+        <button-counter></button-counter>
+    </div>
+    <div id="blog-post">
+        <blog-post 
+        v-for="post in posts"
+        v-bind:key="post.id"
+        v-bind:title="post.title">
+        </blog-post>
+        
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+        Vue.component('todo-item',
+        {
+            props: ['todo'],
+            template: '<li>{{ todo.text }}</li>'
+        });
+        Vue.component('button-counter', {
+            data: function () {
+                return {
+                    count: 0
+                }
+            },
+            template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+        });
+        Vue.component('blog-post', {
+            props: ['title'],
+            template: '<h3>{{ title }}</h3>'
+        });
+        var app = new Vue({
+            el: '#app',
+            data: {
+                groceryList: [
+                    { id: 0, text: 'Vegetables' },
+                    { id: 1, text: 'Cheese' },
+                    { id: 2, text: 'Whatever else humans are supposed to eat' },                  
+                ]
+            }
+        });
+        var btnCounter = new Vue({
+            el: '#components-demo'
+        });
+        var blogPost = new Vue({
+            el: '#blog-post',
+            data: {
+                posts: [
+                    { id: 1, title: 'My journey with Vue' },
+                    { id: 2, title: 'Bloggin with Vue' },
+                    { id: 3, title: 'Why Vue is so fun' }
+                ]
+                
+            }
+        })
+    </script>
+</body>
+</html>
